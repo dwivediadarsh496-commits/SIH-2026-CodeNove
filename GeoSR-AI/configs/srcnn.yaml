@@ -1,0 +1,40 @@
+experiment:
+  name: geosr_srcnn_rgb_x4
+  seed: 42
+
+data:
+  input_channels: 3
+  band_names: ["B04", "B03", "B02"]
+  scale_factor: 4
+  patch_size: 128
+  stride: 64
+  normalization: "percentile"
+  percentiles: [1.0, 99.0]
+  processed_data_dir: "data/processed"
+
+model:
+  name: "srcnn"
+  in_channels: 3
+  out_channels: 3
+  num_features: 64
+  kernel_sizes: [9, 5, 5]
+
+training:
+  batch_size: 16
+  epochs: 3
+  learning_rate: 0.0001
+  weight_decay: 0.0
+  num_workers: 2
+
+loss:
+  reconstruction_weight: 1.0
+  spectral_weight: 0.0
+  structural_weight: 0.0
+
+hardware:
+  device: "auto"
+
+checkpoint:
+  save_best: true
+  save_last: true
+  checkpoint_dir: "checkpoints/srcnn"

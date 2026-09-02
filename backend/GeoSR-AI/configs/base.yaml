@@ -1,0 +1,60 @@
+experiment:
+  name: geosr_baseline_rgb_x4
+  seed: 42
+  description: "Base configuration for GeoSR-AI 10m to <4m super-resolved spatial representation engine"
+
+model:
+  name: srcnn                        # Options: srcnn, edsr, swinir
+  in_channels: 3
+  out_channels: 3
+  num_features: 64
+  num_blocks: 16                     # Used by EDSR / SwinIR
+  res_scale: 0.1                     # Residual scaling for EDSR
+  embed_dim: 96                      # Used by SwinIR
+
+data:
+  input_channels: 3
+  band_names: ["B04", "B03", "B02"]  # Sentinel-2 RGB (Red, Green, Blue)
+  scale_factor: 4                     # 10m -> 2.5m representation
+  patch_size: 128                     # HR patch spatial dimension
+  stride: 64                          # HR patch extraction stride
+  normalization: "percentile"         # Options: min_max, percentile, reflectance_scale, dataset_stats
+  percentiles: [1.0, 99.0]
+  reflectance_scale_factor: 10000.0   # Standard Sentinel-2 L2A scaling factor
+  raw_data_dir: "data/raw"
+  processed_data_dir: "data/processed"
+  train_split: 0.8
+  val_split: 0.1
+  test_split: 0.1
+
+degradation:
+  blur_kernel_size: 7
+  blur_sigma: 1.5                     # Controlled degradation kernel sigma
+  noise_type: "gaussian"             # Options: none, gaussian, poisson
+  noise_sigma: 0.005
+
+training:
+  batch_size: 8
+  epochs: 100
+  learning_rate: 0.0002
+  weight_decay: 0.0001
+  num_workers: 2
+
+loss:
+  reconstruction_weight: 1.0
+  spectral_weight: 0.1
+  structural_weight: 0.05
+
+hardware:
+  device: "auto"                       # Options: auto, cuda, cpu
+  mixed_precision: false              # torch.cuda.amp mixed precision
+
+inference:
+  tile_size: 256                       # LR tile size for tiled inference
+  overlap: 32                          # LR tile pixel overlap for seamless stitching
+  batch_size: 4
+
+checkpoint:
+  save_best: true
+  save_last: true
+  checkpoint_dir: "checkpoints"

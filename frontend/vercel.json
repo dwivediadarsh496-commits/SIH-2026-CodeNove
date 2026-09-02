@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "app/**": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://deep-learning-based-super-resolution-mapping-srm-production.up.railway.app/api/:path*"
+    }
+  ]
+}

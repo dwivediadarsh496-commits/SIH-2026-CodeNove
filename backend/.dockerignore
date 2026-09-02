@@ -1,0 +1,17 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.git
+.gitignore
+.github
+*.SAFE.zip
+outputs/
+.next
+node_modules

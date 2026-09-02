@@ -1,0 +1,83 @@
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Large raw satellite data & archives
+*.SAFE/
+*.SAFE.zip
+*.zip
+*.tar.gz
+*.tar
+*.rar
+*.7z
+
+# Processed heavy datasets & raw data caches
+GeoSR-AI/data/processed/
+GeoSR-AI/data/raw/
+data/processed/
+data/raw/
+
+# Inference outputs & logs
+outputs/inference/
+*.log
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+# Frontend ignores
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.playwright-browsers/
+frontend/*.tsbuildinfo
+frontend/.env*.local
+.npm-cache/
+hf_space/
+hf_space_geo_sr_si/
+
+
+
+GeoSR-AI/data/processed/
+GeoSR-AI/notebooks/checkpoints/
+backend/checkpoints/
+ml_dl_models/*.ipynb_checkpoints/
+*.pth
+*.npz
