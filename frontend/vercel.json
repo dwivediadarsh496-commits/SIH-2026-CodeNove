@@ -7,7 +7,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://geosr-backend.onrender.com/api/:path*"
+      "destination": "http://13.233.156.94:8000/api/:path*"
     }
   ]
 }

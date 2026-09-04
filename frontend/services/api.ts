@@ -3,8 +3,8 @@ import type { HealthResponse, ModelInfoResponse, SuperResolutionResult } from "@
 // Always use relative paths — Next.js rewrites proxy to Railway backend
 export const API_BASE_URL = "";
 
-// Direct Render URL — used as primary for inference (avoids Vercel proxy timeout on large uploads)
-export const RENDER_DIRECT_URL = process.env.NEXT_PUBLIC_API_URL || "https://geosr-backend.onrender.com";
+// Direct backend URL — used as primary for inference (avoids Vercel proxy timeout on large uploads)
+export const RENDER_DIRECT_URL = process.env.NEXT_PUBLIC_API_URL || "http://13.233.156.94:8000";
 
 type ApiErrorPayload = {
   detail?: string;
