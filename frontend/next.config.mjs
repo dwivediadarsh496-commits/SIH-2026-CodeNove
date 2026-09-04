@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://deep-learning-based-super-resolution-mapping-srm-production.up.railway.app";
+const BACKEND_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://43.204.114.28:8000";
 
 const nextConfig = {
   poweredByHeader: false,
