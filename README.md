@@ -1,516 +1,151 @@
-# 🛰️ GeoSR-AI
+# CodeNove — GeoSR-AI
 
-### Deep Learning Based Super-Resolution Mapping from Medium-Resolution Satellite Imagery
+> AI-powered satellite image super-resolution and geospatial processing platform, built for Smart India Hackathon 2026.
 
-<p align="center">
-  <b>Smart India Hackathon 2026 • SIH 2026</b>
-</p>
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-black?logo=vercel)](https://sih-2026-code-nove.vercel.app/)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/API-FastAPI-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 
-<p align="center">
-  <a href="https://sih-2026-code-nove.vercel.app/">🌐 Live Demo</a>
-  •
-  <a href="https://github.com/dwivediadarsh496-commits/SIH-2026-CodeNove">💻 Repository</a>
-</p>
+## Overview
 
----
+CodeNove helps transform low-resolution multi-spectral satellite imagery—such as Sentinel-2 and Landsat data—into higher-resolution imagery using deep learning. It combines a web interface, a FastAPI inference service, and geospatial tooling designed to preserve useful raster metadata during processing.
 
-## 🌍 Overview
+**Live application:** [sih-2026-code-nove.vercel.app](https://sih-2026-code-nove.vercel.app/)
 
-**GeoSR-AI** is an AI-powered geospatial platform designed to enhance the spatial resolution of medium-resolution satellite imagery using **deep learning-based super-resolution techniques**.
+## Features
 
-The system combines **computer vision, deep learning, and geospatial image processing** to generate higher-resolution imagery while preserving important spatial and spectral information.
+- Super-resolution models: **SRCNN**, **EDSR**, and **SwinIR**
+- Multi-band satellite raster support (RGB, NIR, Red Edge, and more)
+- GeoTIFF and CRS metadata preservation
+- Memory-efficient tiled inference for large satellite scenes
+- Seamless tile blending with overlapping patches
+- Cloud-masking and atmospheric-correction workflows
+- Quality metrics: PSNR, SSIM, RMSE, SAM, and ERGAS
+- REST API for uploads, inference jobs, tracking, and downloads
 
-It is designed for satellite data such as **Sentinel-2 and Landsat** and supports multi-band geospatial imagery workflows.
-
----
-
-## 🎯 Problem Statement
-
-Medium-resolution satellite imagery provides valuable information for large-scale Earth observation, but its spatial resolution can limit detailed analysis.
-
-Applications such as:
-
-* 🏙️ Urban development monitoring
-* 🌾 Agricultural analysis
-* 🌳 Environmental monitoring
-* 🛰️ Remote sensing
-* 🌊 Disaster assessment
-* 🗺️ Geospatial mapping
-
-often require more detailed spatial information.
-
-Traditional high-resolution satellite imagery can be expensive and may not always be available.
-
-### Our Approach
-
-GeoSR-AI applies **deep learning-based Super-Resolution Mapping (SRM)** to enhance the spatial resolution of medium-resolution satellite imagery while maintaining geospatial information.
-
----
-
-# 🚀 Key Features
-
-## 🧠 Deep Learning Super-Resolution
-
-The framework supports multiple deep learning architectures:
-
-* **SRCNN** — Super-Resolution Convolutional Neural Network
-* **EDSR** — Enhanced Deep Residual Network
-* **SwinIR** — Transformer-based image restoration architecture
-
-These models provide different approaches for reconstructing high-resolution imagery.
-
----
-
-## 🛰️ Multi-Spectral Satellite Support
-
-The platform is designed to work with multi-band satellite imagery, including:
-
-* RGB bands
-* Near Infrared (NIR)
-* Red Edge bands
-* Other compatible spectral bands
-
-This makes the system suitable for remote-sensing applications beyond conventional RGB image enhancement.
-
----
-
-## 🌐 Geospatial Information Preservation
-
-GeoSR-AI is designed to preserve important geospatial information during processing, including:
-
-* GeoTIFF metadata
-* Coordinate Reference System (CRS)
-* Spatial information
-* Multi-band raster structure
-
-This allows generated outputs to remain useful within geospatial workflows.
-
----
-
-## ☁️ Satellite Image Preprocessing
-
-The framework includes support for preprocessing operations such as:
-
-* Image normalization
-* Tiling
-* Cloud masking
-* Atmospheric correction workflows
-* Multi-band preprocessing
-
----
-
-## 🔲 Tiled Inference
-
-Large satellite scenes can contain millions of pixels.
-
-Instead of processing an entire image at once, GeoSR-AI supports **patch/tile-based inference**.
-
-### Pipeline
+## Architecture
 
 ```text
-Large Satellite Image
-        ↓
-     Tiling
-        ↓
-Overlapping Patches
-        ↓
- Deep Learning Model
-        ↓
-Super-Resolved Patches
-        ↓
- Edge Blending
-        ↓
-Reconstructed GeoTIFF
+Satellite imagery (GeoTIFF / raster)
+              |
+              v
+     Frontend web application
+              |
+              v
+       FastAPI backend service
+              |
+              v
+Preprocessing → AI super-resolution → Geospatial export
+              |
+              v
+ Enhanced imagery + evaluation metrics
 ```
 
-This approach helps reduce memory requirements and makes large satellite scenes easier to process.
-
----
-
-## 📊 Image Quality Evaluation
-
-The framework supports multiple evaluation metrics:
-
-| Metric    | Purpose                                |
-| --------- | -------------------------------------- |
-| **PSNR**  | Measures reconstruction quality        |
-| **SSIM**  | Measures structural similarity         |
-| **RMSE**  | Measures reconstruction error          |
-| **SAM**   | Measures spectral distortion           |
-| **ERGAS** | Measures global spectral/spatial error |
-
-These metrics can be used to compare super-resolution results across different models.
-
----
-
-## 🔬 Uncertainty Estimation
-
-The framework also provides support for uncertainty analysis using approaches such as:
-
-* Monte Carlo Dropout
-* Ensemble variance
-
-This can help identify areas where the model may have lower confidence in its reconstruction.
-
----
-
-# 🏗️ System Architecture
+## Repository Structure
 
 ```text
-                    ┌──────────────────────┐
-                    │  Satellite Imagery   │
-                    │ Sentinel-2 / Landsat │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │     Preprocessing    │
-                    │ Tiling / Normalizing │
-                    │ Cloud / Atmospheric  │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │  Super Resolution    │
-                    │                      │
-                    │ SRCNN / EDSR /       │
-                    │ SwinIR               │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │   Reconstruction     │
-                    │ Edge Blending /      │
-                    │ Tile Merging          │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │   GeoTIFF Output     │
-                    │ Metadata + CRS        │
-                    │ Preserved             │
-                    └──────────┬───────────┘
-                               │
-                               ▼
-                    ┌──────────────────────┐
-                    │   Evaluation &       │
-                    │   Visualization      │
-                    └──────────────────────┘
+.
+├── frontend/             # Web application
+├── backend/              # FastAPI server and inference service
+│   ├── main.py           # API routes
+│   ├── ml_service.py     # Model loading and inference
+│   ├── config.py         # Service configuration
+│   └── utils.py          # Image and geospatial utilities
+├── GeoSR-AI/             # Core ML and geospatial framework
+│   ├── datasets/         # Dataset loaders and transforms
+│   ├── evaluation/       # PSNR, SSIM, SAM, ERGAS, and RMSE metrics
+│   ├── geospatial/       # Raster and GeoTIFF tools
+│   ├── inference/        # Tiled inference pipelines
+│   ├── models/           # SRCNN, EDSR, and SwinIR implementations
+│   ├── preprocessing/    # Tiling, masking, and normalization
+│   ├── training/         # Training and validation workflows
+│   └── uncertainty/      # Uncertainty estimation modules
+├── ml_dl_models/         # ML/DL research notebooks and experiments
+├── requirements.txt      # Project dependencies
+└── test_integration.py   # End-to-end integration test
 ```
 
----
+## Getting Started
 
-# 📁 Project Structure
+### Prerequisites
 
-```text
-SIH-2026-CodeNove/
-│
-├── GeoSR-AI/
-│   ├── datasets/
-│   ├── evaluation/
-│   ├── geospatial/
-│   ├── inference/
-│   ├── losses/
-│   ├── models/
-│   ├── notebooks/
-│   ├── preprocessing/
-│   ├── scripts/
-│   ├── tests/
-│   ├── training/
-│   └── uncertainty/
-│
-├── backend/
-│   ├── config.py
-│   ├── main.py
-│   ├── ml_service.py
-│   ├── utils.py
-│   └── requirements.txt
-│
-├── frontend/
-│
-├── ml_dl_models/
-│
-├── test_integration.py
-├── requirements.txt
-├── .gitignore
-└── README.md
-```
+- Python 3.10 or later
+- `pip`
+- Git
 
----
-
-# ⚙️ Technology Stack
-
-### Artificial Intelligence / Machine Learning
-
-* Python
-* PyTorch
-* Deep Learning
-* Computer Vision
-* Super-Resolution
-* Transformer-based Vision Models
-
-### Geospatial Processing
-
-* Raster Processing
-* GeoTIFF
-* GDAL
-* Rasterio
-* Multi-band Satellite Imagery
-* CRS / Geospatial Metadata
-
-### Backend
-
-* FastAPI
-* Uvicorn
-* REST APIs
-
-### Frontend
-
-* Modern Web Interface
-* Interactive Geospatial Visualization
-* API Integration
-
-### Development
-
-* Git
-* GitHub
-* Jupyter Notebook
-* Python Virtual Environment
-
----
-
-# 🛠️ Installation
-
-## 1. Clone the Repository
+### Installation
 
 ```bash
 git clone https://github.com/dwivediadarsh496-commits/SIH-2026-CodeNove.git
-
 cd SIH-2026-CodeNove
+
+python -m venv .venv
 ```
 
----
-
-## 2. Create Virtual Environment
-
-### Windows
+Activate the environment:
 
 ```bash
-python -m venv venv
+# Windows (PowerShell)
+.\.venv\Scripts\Activate.ps1
 
-.\venv\Scripts\activate
+# Linux / macOS
+source .venv/bin/activate
 ```
 
-### Linux / macOS
+Install the project dependencies:
 
 ```bash
-python3 -m venv venv
-
-source venv/bin/activate
+pip install -r requirements.txt
 ```
 
----
-
-## 3. Install Dependencies
+If the backend maintains its own dependency list, install it as well:
 
 ```bash
 pip install -r backend/requirements.txt
 ```
 
----
-
-# ▶️ Run Backend
-
-Start the FastAPI server:
+### Run the API
 
 ```bash
 uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-After starting the server:
+After it starts, open the interactive API documentation at [http://localhost:8000/docs](http://localhost:8000/docs).
 
-```text
-http://localhost:8000
-```
-
-### API Documentation
-
-FastAPI Swagger documentation:
-
-```text
-http://localhost:8000/docs
-```
-
----
-
-# 🧪 Run Integration Tests
+### Run the Integration Test
 
 ```bash
 python test_integration.py
 ```
 
----
+## Evaluation Metrics
 
-# 🔄 Processing Workflow
+| Metric | What it measures |
+| --- | --- |
+| PSNR | Pixel-level reconstruction quality |
+| SSIM | Structural similarity between images |
+| RMSE | Average prediction error magnitude |
+| SAM | Spectral distortion across image bands |
+| ERGAS | Relative global error in synthesized imagery |
 
-```text
-Satellite Data
-      │
-      ▼
-Data Validation
-      │
-      ▼
-Preprocessing
-      │
-      ├── Cloud Masking
-      ├── Normalization
-      └── Tiling
-      │
-      ▼
-Deep Learning Model
-      │
-      ├── SRCNN
-      ├── EDSR
-      └── SwinIR
-      │
-      ▼
-Super-Resolution
-      │
-      ▼
-Tile Reconstruction
-      │
-      ▼
-Geospatial Metadata Restoration
-      │
-      ▼
-High-Resolution GeoTIFF
-      │
-      ▼
-Evaluation
-```
+## Technology Stack
 
----
+- **Frontend:** Web application deployed on Vercel
+- **Backend:** FastAPI
+- **Machine learning:** Python deep-learning models (SRCNN, EDSR, SwinIR)
+- **Geospatial processing:** GeoTIFF and multi-band raster workflows
 
-# 🌎 Potential Applications
+## Contributing
 
-GeoSR-AI can support research and applications in areas such as:
+1. Fork the repository.
+2. Create a feature branch: `git checkout -b feature/your-feature`.
+3. Commit your changes with a clear message.
+4. Push the branch and open a pull request.
 
-### 🏙️ Urban Monitoring
+## License
 
-Detailed analysis of urban expansion and infrastructure.
+This project was developed for **Smart India Hackathon 2026**. Add a license file to the repository before reusing or distributing the code outside the project terms.
 
-### 🌾 Agriculture
+## Team
 
-Crop and land-cover analysis using enhanced satellite imagery.
-
-### 🌳 Environmental Monitoring
-
-Improved observation of vegetation and environmental changes.
-
-### 🌊 Disaster Management
-
-Enhanced imagery for disaster assessment and response analysis.
-
-### 🗺️ Remote Sensing
-
-Improved spatial information for geospatial research.
-
-### 🛰️ Earth Observation
-
-Supporting satellite-image-based scientific analysis.
-
----
-
-# 📈 Future Scope
-
-Future development can include:
-
-* Advanced Transformer-based SR architectures
-* More satellite datasets
-* GPU-accelerated inference
-* Automated model selection
-* Real-time satellite-image processing
-* Explainable AI for super-resolution
-* Advanced uncertainty visualization
-* Cloud-based large-scale inference
-* Integration with GIS platforms
-* Temporal satellite-image super-resolution
-
----
-
-# 🔐 Responsible AI & Data Considerations
-
-The system is intended for **research, experimentation, and geospatial analysis**.
-
-Super-resolved imagery represents an AI-generated enhancement and should not automatically be treated as equivalent to native high-resolution satellite imagery.
-
-For scientific or operational applications, generated results should be validated against appropriate reference datasets and domain-specific requirements.
-
----
-
-# 📊 Evaluation Metrics
-
-GeoSR-AI supports the following metrics:
-
-```text
-PSNR
-SSIM
-RMSE
-SAM
-ERGAS
-```
-
-These metrics provide complementary information about spatial reconstruction quality, structural similarity, reconstruction error, and spectral fidelity.
-
----
-
-# 🌐 Demo
-
-🚀 **Live Frontend**
-
-https://sih-2026-code-nove.vercel.app/
-
----
-
-# 👥 Team
-
-### CodeNove
-
-Developed as part of **Smart India Hackathon 2026**.
-
-The project combines:
-
-* Artificial Intelligence
-* Deep Learning
-* Computer Vision
-* Remote Sensing
-* Geospatial Computing
-* Full-Stack Development
-
----
-
-# 🏆 Smart India Hackathon 2026
-
-This project was developed for **Smart India Hackathon 2026** under the problem statement:
-
-> **Deep Learning Based Super Resolution Mapping (SRM) from Medium Resolution Satellite Imageries**
-
-The goal is to explore how modern deep learning techniques can enhance the usability of medium-resolution satellite imagery for geospatial applications.
-
----
-
-# 📜 License
-
-This project is developed for **Smart India Hackathon 2026** and is intended for educational, research, and demonstration purposes.
-
----
-
-<p align="center">
-  🛰️ <b>GeoSR-AI</b>
-  <br>
-  Deep Learning • Remote Sensing • Geospatial Intelligence
-  <br><br>
-  <i>Turning satellite data into deeper insights.</i>
-</p>
-
- 
+Built by **CodeNove** for Smart India Hackathon 2026.
